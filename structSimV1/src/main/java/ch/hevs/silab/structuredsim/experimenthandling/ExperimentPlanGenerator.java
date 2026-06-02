@@ -96,6 +96,10 @@ public class ExperimentPlanGenerator implements Runnable {
 
 		while(!toExplore.isEmpty()){
 
+			if(options.getTypeOfCuttOfPlanning().equals("INT") && idCpt >= options.getCuttOfPlanning()){
+				break;
+			}
+
 			parentEnv = toExplore.remove(0);
 
 			for (AModifier modifier : listModifiers) {
@@ -107,8 +111,7 @@ public class ExperimentPlanGenerator implements Runnable {
 				System.out.println("--------------------------------------------" +currentEnv.id + " " +  currentEnv.trace.toString());
 				currentEnv.setProbability(parentEnv.getProbability() * modifier.getProbability());
 
-				if(options.getTypeOfCuttOfPlanning().equals("CRITERIA") && 
-						currentEnv.getProbability() > options.getStopCriteria()){
+				if(options.getTypeOfCuttOfPlanning().equals("CRITERIA") && currentEnv.getProbability() > options.getStopCriteria()){
 					toExplore.add(currentEnv);
 
 				}
