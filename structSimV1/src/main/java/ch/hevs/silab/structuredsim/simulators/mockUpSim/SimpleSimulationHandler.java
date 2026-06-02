@@ -30,6 +30,8 @@ public class SimpleSimulationHandler extends ASimulationSystemHandler {
 
     @Override
     public void startSimulation(String pathToInputFile) {
+        String resultFile = options.getPathToSimulatorResultFile();
+        MySimulator.run(pathToInputFile, resultFile);
     }
 
     @Override
