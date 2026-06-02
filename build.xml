@@ -1,0 +1,28 @@
+<project name="structSim-example" default="run" basedir=".">
+
+    <property name="src" value="structSimV1/src/main/java"/>
+    <property name="lib" value="structSimV1/lib"/>
+    <property name="jar" value="structSimV1.jar"/>
+    <property name="main" value="ch.hevs.silab.structuredsim.simulators.mockUpSim.Simulation"/>
+
+    <path id="classpath">
+        <pathelement location="${src}"/>
+        <pathelement location="${jar}"/>
+        <fileset dir="${lib}" includes="*.jar"/>
+    </path>
+
+    <target name="compile">
+        <javac srcdir="${src}" classpathref="classpath" includeantruntime="false"/>
+    </target>
+
+    <target name="run" depends="compile">
+        <java classname="${main}" classpathref="classpath" fork="true"/>
+    </target>
+
+    <target name="clean">
+        <delete>
+            <fileset dir="${src}" includes="**/*.class"/>
+        </delete>
+    </target>
+
+</project>
