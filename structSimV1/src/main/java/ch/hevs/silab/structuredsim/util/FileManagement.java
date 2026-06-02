@@ -258,7 +258,7 @@ public class FileManagement {
 			e.printStackTrace();
 			logger.error("Error to load Data from Properties file");
 		}
-		String cuttOfValue = "";
+		String cuttOfValue = properties.getProperty("cuttOfPlanning", "");
 
 		for (String key : properties.stringPropertyNames()) {
 
