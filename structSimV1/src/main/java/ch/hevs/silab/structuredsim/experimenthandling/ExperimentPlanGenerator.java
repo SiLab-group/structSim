@@ -114,7 +114,7 @@ public class ExperimentPlanGenerator implements Runnable {
 				}
 
 				if(options.getTypeOfCuttOfPlanning().equals("INT")&&
-						cpt <= options.getCuttOfPlanning()){
+						idCpt < options.getCuttOfPlanning()){
 					toExplore.add(currentEnv);
 				}
 				else{

@@ -143,7 +143,7 @@ public class FileManagement {
 		File dest = new File(destination);
 
 		try {
-			Files.copy(fileToCopy.toPath(), dest.toPath());
+			Files.copy(fileToCopy.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		} catch (Exception e) {
 			logger.error("This file in this folder already exist");
 			//e.printStackTrace();
