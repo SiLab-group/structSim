@@ -28,11 +28,10 @@ import java.util.concurrent.PriorityBlockingQueue;
 
 import ch.hevs.silab.structuredsim.experimenthandling.Environment;
 import ch.hevs.silab.structuredsim.experimenthandling.ExperimentPlanGenerator;
-import ch.hevs.silab.structuredsim.experimenthandling.ExperimentResultHandler;
 import ch.hevs.silab.structuredsim.experimenthandling.ExperimentSimulatorHandler;
 import ch.hevs.silab.structuredsim.experimenthandling.Options;
 import ch.hevs.silab.structuredsim.experimenthandling.Parameter;
-import ch.hevs.silab.structuredsim.test.Simulation;
+import ch.hevs.silab.structuredsim.gluecode.Simulation;
 import ch.hevs.silab.structuredsim.util.FileManagement;
 
 /**
