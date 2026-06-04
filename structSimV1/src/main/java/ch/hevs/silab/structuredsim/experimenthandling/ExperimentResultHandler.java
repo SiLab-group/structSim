@@ -32,7 +32,7 @@ import ch.hevs.silab.structuredsim.util.FileManagement;
 /**
  * Name : ExperimentResultHandler
  * <p>
- * Description : This thread is for displaying where the results are save
+ * Description : This thread is for displaying where the results are saved
  * <p>
  * Date : 25 july 2017
  * 
@@ -57,8 +57,6 @@ public class ExperimentResultHandler implements Runnable {
 	 *            : BlockingQueue to get the list fulfilled
 	 * @param glueCode
 	 *            : Class of the glueCode
-	 * @param options
-	 *            : options object
 	 */
 	public ExperimentResultHandler(BlockingQueue<String> resultsQueue, Object glueCode, FileManagement fm, Options o) {
 		this.resultsQueue = resultsQueue;

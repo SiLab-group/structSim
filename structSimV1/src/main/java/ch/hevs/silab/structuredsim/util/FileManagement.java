@@ -143,7 +143,7 @@ public class FileManagement {
 		File dest = new File(destination);
 
 		try {
-			Files.copy(fileToCopy.toPath(), dest.toPath());
+			Files.copy(fileToCopy.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		} catch (Exception e) {
 			logger.error("This file in this folder already exist");
 			//e.printStackTrace();
@@ -258,7 +258,8 @@ public class FileManagement {
 			e.printStackTrace();
 			logger.error("Error to load Data from Properties file");
 		}
-		String cuttOfValue = "";
+		//String cuttOfValue = "";
+		String cuttOfValue = properties.getProperty("cuttOfPlanning", "");
 
 		for (String key : properties.stringPropertyNames()) {
 
@@ -306,6 +307,61 @@ public class FileManagement {
 				break;
 
 			}
+		}
+
+		return options;
+	}
+
+	/**
+	 * Same method as the previous one,
+	 * but using an InputStream instead of a String
+	 * @param ips
+	 * @return Options
+	 */
+	public Options loadDataFromPropertiesFile(InputStream ips) {
+		Properties properties = new Properties();
+		try {
+			properties.load(ips);
+			ips.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			logger.error("Error to load Data from Properties file");
+		}
+
+		// 1. D'abord, lire toutes les valeurs simples
+		options.setPathParameters(properties.getProperty("pathParameters"));
+		options.setFolderPathOUT(properties.getProperty("pathOUT"));
+		options.setPathSimulator(properties.getProperty("pathSimulator"));
+		options.setPathToSimulatorResultFile(properties.getProperty("pathToSimulatorResultFile"));
+
+		// 2. Ensuite, traiter les valeurs interdépendantes
+		String cuttOfValue = properties.getProperty("cuttOfPlanning", "");
+		String typeCuttOf = properties.getProperty("typeCuttOfPlanning", "");
+
+		options.setTypeOfCuttOfPlanning(typeCuttOf);
+
+		switch (typeCuttOf) {
+			case "INT":
+				options.setCuttOfPlanning(Integer.parseInt(cuttOfValue));
+				break;
+			case "DAY":
+				Calendar cal1 = Calendar.getInstance();
+				cal1.set(Calendar.DATE, Integer.parseInt(cuttOfValue));
+				options.setCuttOfPlanningH(cal1);
+				break;
+			case "HOURS":
+				Calendar cal2 = Calendar.getInstance();
+				cal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(cuttOfValue));
+				options.setCuttOfPlanningH(cal2);
+				break;
+			case "MINUTES":
+				Calendar cal3 = Calendar.getInstance();
+				cal3.set(Calendar.MINUTE, Integer.parseInt(cuttOfValue));
+				options.setCuttOfPlanningH(cal3);
+				break;
+			case "CRITERIA":
+				options.setStopCriteria(Double.parseDouble(cuttOfValue));
+				break;
 		}
 
 		return options;

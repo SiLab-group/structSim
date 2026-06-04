@@ -33,7 +33,6 @@ public interface IStartSimulation {
 
 	/**
 	 *Method to start the simulation that is an external application. The result are save in file txt
-	 * @param baseEnvToSimulate : Environment that will get the simulation
 	 */
 	public void startSimulation(String pathToInputFile);
 

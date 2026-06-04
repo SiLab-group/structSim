@@ -96,30 +96,60 @@ public class ExperimentPlanGenerator implements Runnable {
 
 		while(!toExplore.isEmpty()){
 
+			/*
+			This break statement is required in order to stop the program at the right time.
+			Without it, the program would keep exploring the current queue until it is empty,
+			which is not what we want I guess ??
+			 */
+			if(options.getTypeOfCuttOfPlanning().equals("INT") && cpt >= options.getCuttOfPlanning()){
+				break;
+			}
+
 			parentEnv = toExplore.remove(0);
 
 			for (AModifier modifier : listModifiers) {
 				idCpt ++;
+
 				currentEnv = new Environment(idCpt, parentEnv);
+
 				currentEnv = modifier.applyModifier(currentEnv);
+
 				currentEnv.getTrace().add(modifier.getName() );
 				//for(String str : currentEn)
 				System.out.println("--------------------------------------------" +currentEnv.id + " " +  currentEnv.trace.toString());
+
 				currentEnv.setProbability(parentEnv.getProbability() * modifier.getProbability());
 
 				if(options.getTypeOfCuttOfPlanning().equals("CRITERIA") && 
 						currentEnv.getProbability() > options.getStopCriteria()){
 					toExplore.add(currentEnv);
 
+
 				}
 
 				if(options.getTypeOfCuttOfPlanning().equals("INT")&&
-						cpt <= options.getCuttOfPlanning()){
+						idCpt <= options.getCuttOfPlanning())
+						//cpt <= options.getCuttOfPlanning())
+						/*
+						I don't think this second condition matters anymore
+						because of the break statement at the start
+						of the while loop
+						 */
+
+				{
 					toExplore.add(currentEnv);
 				}
+
+
+				/*
+				Not sure why that else break statement was there...
+				It just prevented the files to be created
+				if the type of cut was not INT.
+				 */
+				/*
 				else{
 					break;
-				}
+				}*/
 
 				fm.createNewFolderSimulation(currentEnv, glueCode);
 				addEnvToQueue(currentEnv);
@@ -128,7 +158,11 @@ public class ExperimentPlanGenerator implements Runnable {
 			}
 			cpt ++;
 			System.out.println("CPT : " + cpt);
-			Collections.sort(toExplore);
+
+			/* We sort the environments by reverse order,
+			to put the most probable one in first position */
+			toExplore.sort(Collections.reverseOrder());
+
 		}
 	}
 
@@ -165,6 +199,7 @@ public class ExperimentPlanGenerator implements Runnable {
 		//Generate the number of Environment that we want
 		long currentTime = System.currentTimeMillis();
 
+		System.out.println("option = " + options.getTypeOfCuttOfPlanning());
 
 		switch(options.getTypeOfCuttOfPlanning()){
 		case "INT" :

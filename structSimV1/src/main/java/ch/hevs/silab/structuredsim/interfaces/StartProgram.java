@@ -21,6 +21,7 @@ package ch.hevs.silab.structuredsim.interfaces;
 
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Vector;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
@@ -31,6 +32,7 @@ import ch.hevs.silab.structuredsim.experimenthandling.ExperimentResultHandler;
 import ch.hevs.silab.structuredsim.experimenthandling.ExperimentSimulatorHandler;
 import ch.hevs.silab.structuredsim.experimenthandling.Options;
 import ch.hevs.silab.structuredsim.experimenthandling.Parameter;
+import ch.hevs.silab.structuredsim.test.Simulation;
 import ch.hevs.silab.structuredsim.util.FileManagement;
 
 /**
@@ -52,13 +54,13 @@ public class StartProgram {
 	 * @param glueCode : glue code object
 	 * @throws IOException
 	 */
-	public static void startProgram(String pathConfigFile, Object glueCode) throws IOException {
+	public static void startProgram(InputStream pathConfigFile, Object glueCode) throws IOException {
 
 		FileManagement fm = new FileManagement();
 
 		// Create an instance of the "GlueCode"
 		ASimulationSystemHandler glueCodeClass = (ASimulationSystemHandler) glueCode;
-//		glueCodeClass.fileManagement = fm;
+		// glueCodeClass.fileManagement = fm;
 
 		// Load the configuration properties file
 		Options o = fm.loadDataFromPropertiesFile(pathConfigFile);
@@ -67,8 +69,19 @@ public class StartProgram {
 		// Get the List of the Parameters
 		Vector<Parameter> listParam = null;
 
-		listParam = glueCodeClass.readParametersFile(o.getPathParameters());
+		//Previous version
+		// listParam = glueCodeClass.readParametersFile(o.getPathParameters());
 
+
+		/*
+		New version by Matthias Gaillard
+		Could not make it work with the previous version
+		using a simple path, so I used InputStream instead.
+		*/
+		InputStream isParams = Simulation.class
+				.getClassLoader()
+				.getResourceAsStream(o.getPathParameters());
+		listParam = glueCodeClass.readParametersFile(isParams);
 
 		// Select the Parameter to change
 		Environment baseEnv = new Environment(0, listParam, 1);

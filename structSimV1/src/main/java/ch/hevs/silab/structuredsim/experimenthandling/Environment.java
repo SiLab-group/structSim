@@ -20,6 +20,8 @@
 
 package ch.hevs.silab.structuredsim.experimenthandling;
 
+import ch.hevs.silab.structuredsim.test.ModifierClass1;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -49,7 +51,6 @@ public class Environment implements Comparable<Environment> {
 	 * 
 	 * @param id : ID
 	 * @param setOfParameters : List of Parameters of this Environment
-	 * @param idParamChanged : ID from the parameters changed in this environment
 	 * @param probability : Probability
 	 */
 	public Environment(int id, Vector<Parameter> setOfParameters, double probability) {
@@ -65,7 +66,21 @@ public class Environment implements Comparable<Environment> {
 	 */
 	public Environment(int id, Environment e){
 		this.id = id;
-		this.setOfParameters = e.setOfParameters;
+		// this.setOfParameters = e.setOfParameters;
+
+		/* When creating a child from a parent environment,
+		the constructor was using a reference of the parent environment's parameters.
+		That means that when a modifier was applied to a child,
+		it was also implicitly applied to the parent.
+		This was inducing incorrect simulations when multiple modifiers were involved.
+		That's why I changed this constructor to take a copy of the parameters
+		instead of references
+		 */
+		this.setOfParameters = new Vector<Parameter>();
+		for (Parameter p : e.setOfParameters) {
+			this.setOfParameters.add(new Parameter(p)); // Constructor by copy
+		}
+
 		this.probability = e.probability;
 		this.trace = new ArrayList<String>();
 		for(String s :e.trace){
@@ -137,10 +152,8 @@ public class Environment implements Comparable<Environment> {
 		for(String s : trace){
 			result += "   " + s;
 		}
-
-		return "Simulation ID : " + id + "\t" + "Modifier implemented : "  + result ;
+		return "Simulation ID : " + id + "\t Probability : " + probability + "\t Modifier implemented : "  + result;
 	}
-	
 
 	public List<String> getTrace() {
 		return trace;
@@ -150,10 +163,18 @@ public class Environment implements Comparable<Environment> {
 		this.trace = trace;
 	}
 
+	/**
+	 Allow to order environments by ascending order of probability
+	 */
 	@Override
-	public int compareTo(Environment arg0) {
-		return (int)(this.probability - arg0.getProbability());
+	public int compareTo(Environment other) {
+		/*
+		Changed the method because with the previous implementation,
+		it casted every value to 0 if they were between -1 and 1
+		(which would be the case for probabilities values)
+		With a Double.compare, it correcly returns the corresponding value : -1, 1 or 0.
+		 */
+		return Double.compare(this.probability, other.probability);
 	}
-
 
 }

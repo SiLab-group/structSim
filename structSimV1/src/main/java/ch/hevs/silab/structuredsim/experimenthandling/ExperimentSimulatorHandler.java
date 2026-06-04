@@ -54,8 +54,6 @@ public class ExperimentSimulatorHandler implements Runnable {
 	 * 
 	 * @param environnementQueue
 	 *            : The BlockignQueue where the environment will be saved
-	 * @param simulationHandler
-	 *            : Thread of the simulation
 	 * @param o
 	 *            : options object
 	 * @param glueCode
@@ -74,8 +72,7 @@ public class ExperimentSimulatorHandler implements Runnable {
 
 	/**
 	 * Method to save the result
-	 * @param e : Environment
-	 * @return path where the file will be save
+	 * @return path where the file will be saved
 	 */
 	@Override
 	public void run() {

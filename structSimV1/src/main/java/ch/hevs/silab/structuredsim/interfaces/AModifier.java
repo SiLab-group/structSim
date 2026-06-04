@@ -61,8 +61,7 @@ public abstract class AModifier {
 	 * use the method getParameterToModify to get the Parameter. <p><i>Example : Parameters newParam = getParameterToModify(env.getSetOfParameters(), options.getValueToChange);</i>
 	 * </li>
 	 * </ul>
-	 * @param env : Environment. An Environment is one state of the simulation at the instant T. 
-	 * @param o : options for the simulation
+	 * @param env : Environment. An Environment is one state of the simulation at the instant T.
 	 * @return : environment.
 	 */
 	public abstract Environment applyModifier(Environment env);
