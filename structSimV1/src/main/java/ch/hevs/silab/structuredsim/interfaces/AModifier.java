@@ -45,6 +45,16 @@ public abstract class AModifier {
 		this.name  ="AModifier";
 	}
 
+	/**
+	 * Add this constructor to make it easier to create modifiers
+	 * @param probability
+	 * @param name
+	 */
+	public AModifier(double probability, String name) {
+		this.probability=probability;
+		this.name=name;
+	}
+
 
 
 	/**

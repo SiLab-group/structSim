@@ -20,8 +20,6 @@
 
 package ch.hevs.silab.structuredsim.experimenthandling;
 
-import ch.hevs.silab.structuredsim.test.ModifierClass1;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -86,6 +84,14 @@ public class Environment implements Comparable<Environment> {
 		for(String s :e.trace){
 			trace.add(s);
 		}
+	}
+
+	/**
+	 * Made this default constructor to facilitate the writing
+	 * of the units tests of the FileManagement class
+	 */
+	public Environment() {
+		this(1, new Vector<Parameter>(), 1);
 	}
 
 	/**

@@ -258,7 +258,7 @@ public class FileManagement {
 			e.printStackTrace();
 			logger.error("Error to load Data from Properties file");
 		}
-		//String cuttOfValue = "";
+
 		String cuttOfValue = properties.getProperty("cuttOfPlanning", "");
 
 		for (String key : properties.stringPropertyNames()) {
@@ -328,13 +328,13 @@ public class FileManagement {
 			logger.error("Error to load Data from Properties file");
 		}
 
-		// 1. D'abord, lire toutes les valeurs simples
+		// 1. Read all simple values
 		options.setPathParameters(properties.getProperty("pathParameters"));
 		options.setFolderPathOUT(properties.getProperty("pathOUT"));
 		options.setPathSimulator(properties.getProperty("pathSimulator"));
 		options.setPathToSimulatorResultFile(properties.getProperty("pathToSimulatorResultFile"));
 
-		// 2. Ensuite, traiter les valeurs interdépendantes
+		// 2. Treat independant values
 		String cuttOfValue = properties.getProperty("cuttOfPlanning", "");
 		String typeCuttOf = properties.getProperty("typeCuttOfPlanning", "");
 
@@ -392,6 +392,8 @@ public class FileManagement {
 
 			// Write the results in the existing file, at the end of the file,
 			// don't deleted what is already in the file.
+			// Does create the file if it does not exist,
+			// but launch exception when the folder is missing
 			FileOutputStream fops = new FileOutputStream(filePath, keepPreviousResults);
 			properties.store(fops, null);
 			fops.close();
@@ -473,5 +475,19 @@ public class FileManagement {
 	}
 
 
+	public String getFilename() {
+		return filename;
+	}
 
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	public Options getOptions() {
+		return options;
+	}
+
+	public void setOptions(Options options) {
+		this.options=options;
+	}
 }
