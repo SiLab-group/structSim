@@ -20,12 +20,11 @@
 package ch.hevs.silab.structuredsim.experimenthandling;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.PriorityBlockingQueue;
 
+import ch.hevs.silab.structuredsim.interfaces.ASimulationSystemHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ch.hevs.silab.structuredsim.interfaces.ASimulationSystemHandler;
 import ch.hevs.silab.structuredsim.util.FileManagement;
 
 /**

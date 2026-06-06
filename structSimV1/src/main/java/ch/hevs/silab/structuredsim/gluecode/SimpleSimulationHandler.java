@@ -2,10 +2,11 @@ package ch.hevs.silab.structuredsim.gluecode;
 
 import ch.hevs.silab.structuredsim.experimenthandling.Measure;
 import ch.hevs.silab.structuredsim.interfaces.AModifier;
-import ch.hevs.silab.structuredsim.interfaces.ASimulationSystemHandler;
 import ch.hevs.silab.structuredsim.experimenthandling.Parameter;
+import ch.hevs.silab.structuredsim.interfaces.ASimulationSystemHandler;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -16,9 +17,20 @@ public class SimpleSimulationHandler extends ASimulationSystemHandler {
 
     private ConcreteModifier mc2 = new ConcreteModifier("val1", '*', 0.2, 0.2);
 
+    private List<AModifier> modifiers = new ArrayList<AModifier>();
 
 
     public SimpleSimulationHandler() {
+
+
+
+
+    }
+
+    public SimpleSimulationHandler(List<AModifier> modifiers) {
+
+
+        this.modifiers = modifiers;
 
 
     }
@@ -51,8 +63,10 @@ public class SimpleSimulationHandler extends ASimulationSystemHandler {
 
     @Override
     public List<AModifier> initiateModifierList() {
-        listModifierClass.add(mc1);
-        listModifierClass.add(mc2);
+        //listModifierClass.add(mc1);
+        //listModifierClass.add(mc2);
+
+        listModifierClass = modifiers;
         return listModifierClass;
     }
 

@@ -39,16 +39,14 @@ import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.Properties;
 import java.util.Vector;
-import java.util.concurrent.BlockingQueue;
 
+import ch.hevs.silab.structuredsim.interfaces.ASimulationSystemHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ch.hevs.silab.structuredsim.experimenthandling.Environment;
 import ch.hevs.silab.structuredsim.experimenthandling.Measure;
 import ch.hevs.silab.structuredsim.experimenthandling.Options;
-import ch.hevs.silab.structuredsim.experimenthandling.Parameter;
-import ch.hevs.silab.structuredsim.interfaces.ASimulationSystemHandler;
 
 /**
  * The goal of this class is to manage parameters and/or results files.

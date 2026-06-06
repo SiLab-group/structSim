@@ -20,7 +20,6 @@
 
 package ch.hevs.silab.structuredsim.experimenthandling;
 
-import java.time.temporal.IsoFields;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -28,11 +27,11 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import ch.hevs.silab.structuredsim.interfaces.ASimulationSystemHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ch.hevs.silab.structuredsim.interfaces.AModifier;
-import ch.hevs.silab.structuredsim.interfaces.ASimulationSystemHandler;
 import ch.hevs.silab.structuredsim.interfaces.IManageModifier;
 import ch.hevs.silab.structuredsim.util.FileManagement;
 
