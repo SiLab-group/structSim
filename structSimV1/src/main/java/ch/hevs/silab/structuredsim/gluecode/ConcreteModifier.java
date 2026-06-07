@@ -28,6 +28,10 @@ public class ConcreteModifier extends AModifier {
     public ConcreteModifier(String keyToChange, char operator, double delta) {
         this(keyToChange, operator, delta, 1);
     }
+
+    public ConcreteModifier(double delta) {
+        this("val1", '*', delta, delta);
+    }
     public ConcreteModifier() {
     }
 

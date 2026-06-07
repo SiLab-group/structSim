@@ -89,25 +89,28 @@ public class StartProgram {
 		BlockingQueue<String> resultQueue = new PriorityBlockingQueue<String>();
 
 		glueCodeClass.setOptions(o);
-		
-		ExperimentPlanGenerator planning = new ExperimentPlanGenerator(queue, baseEnv, o, glueCodeClass, fm);
-		Thread planningThread = new Thread(planning);
-		planningThread.setName("Planning Thread");
-		planningThread.start();
-		
-		ExperimentSimulatorHandler simulator = new ExperimentSimulatorHandler(queue, resultQueue, o, glueCodeClass, fm, planning);
-		Thread simultationThread = new Thread(simulator);
-		simultationThread.setName("Simulation Thread");
-		simultationThread.start();
-		
-		/***
-		 * This thread was moved in the run method of ExperimentSimulatorHandler.
-		 * Because all results need to be analyse and measures extracted only after simulations done.
-		 * ExperimentResultHandler result = new ExperimentResultHandler(resultQueue, glueCodeClass, fm, o);
-		 * Thread resultThread = new Thread(result);
-		 * resultThread.setName("Result Thread");
-		 * resultThread.start();
-		 */
+
+		//Added this if statement to prevent generation of theoretically infinite tree
+		if(!o.getTypeOfCuttOfPlanning().equals("CRITERIA") || o.getStopCriteria()>0) {
+			ExperimentPlanGenerator planning = new ExperimentPlanGenerator(queue, baseEnv, o, glueCodeClass, fm);
+			Thread planningThread = new Thread(planning);
+			planningThread.setName("Planning Thread");
+			planningThread.start();
+
+			ExperimentSimulatorHandler simulator = new ExperimentSimulatorHandler(queue, resultQueue, o, glueCodeClass, fm, planning);
+			Thread simultationThread = new Thread(simulator);
+			simultationThread.setName("Simulation Thread");
+			simultationThread.start();
+
+			/***
+			 * This thread was moved in the run method of ExperimentSimulatorHandler.
+			 * Because all results need to be analyse and measures extracted only after simulations done.
+			 * ExperimentResultHandler result = new ExperimentResultHandler(resultQueue, glueCodeClass, fm, o);
+			 * Thread resultThread = new Thread(result);
+			 * resultThread.setName("Result Thread");
+			 * resultThread.start();
+			 */
+		}
 		
 	}
 }

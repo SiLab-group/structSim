@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * This class is used to test methods from FileManagement class
  * related to data serialization
+ * @see FileManagementTests
  * @author Matthias Gaillard
  */
 

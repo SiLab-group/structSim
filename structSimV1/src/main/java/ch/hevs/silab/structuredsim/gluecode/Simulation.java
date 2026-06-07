@@ -29,8 +29,9 @@ public class Simulation extends StartProgram {
 
 
         List<AModifier> modifiers = new ArrayList<AModifier>();
+
+        //modifiers.add(new ConcreteModifier("val1", '*', 0.2, 0.2));
         modifiers.add(new ConcreteModifier("val1", '*', 0.5, 0.5));
-        modifiers.add(new ConcreteModifier("val1", '*', 0.2, 0.2));
 
         //Custom class
         SimpleSimulationHandler ssh = new SimpleSimulationHandler(modifiers);

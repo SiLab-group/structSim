@@ -1,0 +1,4 @@
+*.class
+ResultSim/
+all.log
+structSimV1/target/

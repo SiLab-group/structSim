@@ -21,6 +21,9 @@ import static org.mockito.Mockito.*;
 /**
  * This class is used to test methods from FileManagement class
  * related Environment and Options classes
+ * @see FileManagementTests
+ * @see Environment
+ * @see Options
  * @author Matthias Gaillard
  */
 public class FileManagementSimulationTests extends FileManagementTests {

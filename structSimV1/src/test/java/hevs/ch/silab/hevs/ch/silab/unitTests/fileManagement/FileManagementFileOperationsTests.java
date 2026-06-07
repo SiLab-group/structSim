@@ -11,7 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * This class is used to test methods from FileManagement class
- * related to pure filesystem (copying, moving...)
+ * related to pure file system (copying, moving...)
+ * @see FileManagementTests
  * @author Matthias Gaillard
  */
 

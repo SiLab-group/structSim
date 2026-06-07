@@ -7,7 +7,8 @@ import java.nio.file.Path;
 
 /**
  * This class is used to test methods from FileManagement class
- * Subclasses will do the actual tests
+ * Subclasses will do the actual tests.
+ * @see FileManagement
  * @author Matthias Gaillard
  */
 public class FileManagementTests {

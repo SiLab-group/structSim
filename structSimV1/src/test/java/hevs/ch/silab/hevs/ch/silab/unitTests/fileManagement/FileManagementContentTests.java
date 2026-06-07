@@ -12,6 +12,7 @@ import static junit.framework.Assert.assertEquals;
 /**
  * This class is used to test methods from FileManagement class
  * related to file reading
+ * @see FileManagementTests
  * @author Matthias Gaillard
  */
 
@@ -81,7 +82,5 @@ public class FileManagementContentTests extends FileManagementTests {
         // Assert
         assertEquals("", result);
     }
-
-
 
 }

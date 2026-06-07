@@ -21,6 +21,7 @@ import static junit.framework.Assert.assertTrue;
 
 /**
  * This class is used to test methods from SimpleSimulationHandler class
+ * @see SimpleSimulationHandler
  * @author Matthias Gaillard
  */
 public class SimpleSimulationHandlerTests {
@@ -134,7 +135,5 @@ public class SimpleSimulationHandlerTests {
         assertEquals("val1=10.0", lines.get(0));
         assertEquals("val2=20.5", lines.get(1));
     }
-
-
 
 }

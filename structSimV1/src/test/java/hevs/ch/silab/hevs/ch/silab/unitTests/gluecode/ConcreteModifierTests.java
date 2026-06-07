@@ -12,6 +12,7 @@ import java.util.Vector;
 
 /**
  * This class is used to test methods from ConcreteModifier class
+ * @see ConcreteModifier
  * @author Matthias Gaillard
  */
 public class ConcreteModifierTests extends TestCase {
@@ -26,7 +27,7 @@ public class ConcreteModifierTests extends TestCase {
             "*,3",
             "/,4"
     })
-    public void applyModifier_shouldUpdateTheEnvironment(char operator, double value) {
+    public void applyModifier_shouldUpdateTheEnvironmentCorrectly(char operator, double value) {
         //Arrange
         Environment e = new Environment();
         Vector<Parameter> v = new Vector<>();

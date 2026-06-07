@@ -15,6 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * This class is used to test methods from FileManagement class
  * related to measures and modifiers
+ * @see FileManagementTests
+ * @see Measure
+ * @see ch.hevs.silab.structuredsim.interfaces.AModifier
  * @author Matthias Gaillard
  */
 public class FileManagementExportFilesTests extends FileManagementTests {

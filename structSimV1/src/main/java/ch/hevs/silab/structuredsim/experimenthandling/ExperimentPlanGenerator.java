@@ -126,14 +126,16 @@ public class ExperimentPlanGenerator implements Runnable {
 
 				}
 
-				if(options.getTypeOfCuttOfPlanning().equals("INT")&&
-						idCpt <= options.getCuttOfPlanning())
+				if(options.getTypeOfCuttOfPlanning().equals("INT")
+						//&&idCpt <= options.getCuttOfPlanning())
 						//cpt <= options.getCuttOfPlanning())
 						/*
-						I don't think this second condition matters anymore
-						because of the break statement at the start
-						of the while loop
+						I removed the second condition
+						because it makes wrong results
+						according to integration tests scenario 2
 						 */
+				)
+
 
 				{
 					toExplore.add(currentEnv);
