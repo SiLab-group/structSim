@@ -32,8 +32,8 @@ public class StartProgramTests extends TestCase {
 
     private double delta = 1e-9;
 
-    private String pathOUT = System.getProperty("java.io.tmpdir") + "/structsim-results";
-    private String pathSIM = System.getProperty("java.io.tmpdir") + "/structsim-simulator";
+    private String pathOUT = System.getProperty("java.io.tmpdir").replace("\\", "/") + "/structsim-results";
+    private String pathSIM = System.getProperty("java.io.tmpdir").replace("\\", "/") + "/structsim-simulator";
 
 
     @BeforeEach

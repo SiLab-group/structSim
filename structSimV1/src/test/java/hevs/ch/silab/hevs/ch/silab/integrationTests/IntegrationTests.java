@@ -36,8 +36,8 @@ import java.io.FileWriter;
  * @author Matthias Gaillard
  */
 public class IntegrationTests extends TestCase {
-    private String pathOUT = System.getProperty("java.io.tmpdir") + "/structsim-results";
-    private String pathSIM = System.getProperty("java.io.tmpdir") + "/structsim-simulator";
+    private String pathOUT = System.getProperty("java.io.tmpdir").replace("\\", "/") + "/structsim-results";
+    private String pathSIM = System.getProperty("java.io.tmpdir").replace("\\", "/") + "/structsim-simulator";
 
 
 
