@@ -117,13 +117,13 @@ public class FileManagement {
 	 */
 	public void moveFile(String originFile, String destinationFile) {
 		Path originPath = Paths.get(originFile);
+		if (!Files.exists(originPath)) return;
 		Path destinationPath = Paths.get(destinationFile);
 
 		try {
 			Files.move(originPath, destinationPath, REPLACE_EXISTING);
 		} catch (IOException e) {
 			logger.error("Impossible to move this file");
-			//System.out.println("Impossible to move this file");
 			e.printStackTrace();
 		}
 	}
@@ -144,7 +144,6 @@ public class FileManagement {
 			Files.copy(fileToCopy.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		} catch (Exception e) {
 			logger.error("This file in this folder already exist");
-			//e.printStackTrace();
 		}
 
 	}

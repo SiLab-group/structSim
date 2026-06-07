@@ -36,7 +36,8 @@ import java.io.FileWriter;
  * @author Matthias Gaillard
  */
 public class IntegrationTests extends TestCase {
-    private String pathOUT = "C:/maigration/original/structSim/structSimV1/results";
+    private String pathOUT = System.getProperty("java.io.tmpdir") + "/structsim-results";
+    private String pathSIM = System.getProperty("java.io.tmpdir") + "/structsim-simulator";
 
 
 
@@ -176,14 +177,16 @@ public class IntegrationTests extends TestCase {
 
         // Arrange
         cleanOutputDirectory();
+        Files.createDirectories(Paths.get(pathOUT));
+        Files.createDirectories(Paths.get(pathSIM));
         File tempDir = Files.createTempDirectory("structsim-test").toFile();
         File tempConfig = new File(tempDir, "config.properties");
 
         String configContent =
                 "pathOUT = " + pathOUT + "\n" +
                         "pathParameters = parameters.txt\n" +
-                        "pathSimulator = c:/mySimulator\n" +
-                        "pathToSimulatorResultFile = c:/mySimulator/results/results.txt\n" +
+                        "pathSimulator = " + pathSIM + "\n" +
+                        "pathToSimulatorResultFile = " + pathSIM + "/results/results.txt\n" +
                         "cuttOfPlanning = " + cuttOfPlanning + "\n" +
                         "typeCuttOfPlanning = " + typeCuttOfPlanning + "\n";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(tempConfig))) {
@@ -380,8 +383,8 @@ public class IntegrationTests extends TestCase {
         String configContent =
                 "pathOUT = " + pathOUT + "\n" +
                         "pathParameters = parameters.txt\n" +
-                        "pathSimulator = c:/mySimulator\n" +
-                        "pathToSimulatorResultFile = c:/mySimulator/results/results.txt\n" +
+                        "pathSimulator = " + pathSIM + "\n" +
+                        "pathToSimulatorResultFile = " + pathSIM + "/results/results.txt\n" +
                         "cuttOfPlanning = " + cuttOfPlanning + "\n" +
                         "typeCuttOfPlanning = " + typeCuttOfPlanning + "\n";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(tempConfig))) {
