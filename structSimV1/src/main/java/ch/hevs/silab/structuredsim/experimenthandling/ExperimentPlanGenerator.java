@@ -111,7 +111,7 @@ public class ExperimentPlanGenerator implements Runnable {
 
 				currentEnv.getTrace().add(modifier.getName() );
 				//for(String str : currentEn)
-				System.out.println("--------------------------------------------" +currentEnv.id + " " +  currentEnv.trace.toString());
+				logger.debug("--------------------------------------------" +currentEnv.id + " " +  currentEnv.trace.toString());
 
 				currentEnv.setProbability(parentEnv.getProbability() * modifier.getProbability());
 
@@ -130,7 +130,7 @@ public class ExperimentPlanGenerator implements Runnable {
 
 			}
 			cpt ++;
-			System.out.println("CPT : " + cpt);
+			logger.debug("CPT : " + cpt);
 
 			/* We sort the environments by reverse order,
 			to put the most probable one in first position */
@@ -170,7 +170,7 @@ public class ExperimentPlanGenerator implements Runnable {
 		//Generate the number of Environment that we want
 		long currentTime = System.currentTimeMillis();
 
-		System.out.println("option = " + options.getTypeOfCuttOfPlanning());
+		logger.debug("option = " + options.getTypeOfCuttOfPlanning());
 
 		switch(options.getTypeOfCuttOfPlanning()){
 		case "INT" :

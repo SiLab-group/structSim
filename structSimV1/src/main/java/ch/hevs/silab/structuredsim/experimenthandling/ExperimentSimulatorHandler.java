@@ -82,12 +82,12 @@ public class ExperimentSimulatorHandler implements Runnable {
 
 		do {
 			try {
-				System.out.println("Size of the Simulation Queue : " + environnmentQueue.size());
+				logger.debug("Size of the Simulation Queue : " + environnmentQueue.size());
 				Environment env = environnmentQueue.take();
 				//glueCode.startSimulation(env);
 				glueCode.startSimulation(options.getPathParameters());
 				String resultPathForThisSimulation = env.pathSaveResult+"/results_sim"+ env.getId()+ ".txt";
-				System.out.println(resultPathForThisSimulation);
+				logger.debug(resultPathForThisSimulation);
 				fm.copyFile(options.pathToSimulatorResultFile,resultPathForThisSimulation);
 				fm.copyFile(options.pathToSimulatorResultFile, options.pathSimulator + "/"+env.pathSaveResult.substring(env.pathSaveResult.lastIndexOf("/")+1, env.pathSaveResult.length())+"/results_sim"+ env.id +".txt");
 

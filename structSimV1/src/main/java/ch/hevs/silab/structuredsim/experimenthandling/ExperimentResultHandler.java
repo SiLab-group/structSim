@@ -46,8 +46,8 @@ public class ExperimentResultHandler implements Runnable {
 	protected ASimulationSystemHandler glueCode;
 	private FileManagement fm;
 	private static final Logger logger = LogManager.getLogger(ExperimentResultHandler.class.getName());
-	protected Options options;
 
+	protected Options options;
 
 
 	/**

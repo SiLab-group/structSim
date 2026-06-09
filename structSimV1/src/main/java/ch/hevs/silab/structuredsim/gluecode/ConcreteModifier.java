@@ -1,13 +1,18 @@
 package ch.hevs.silab.structuredsim.gluecode;
 
 import ch.hevs.silab.structuredsim.experimenthandling.Environment;
+import ch.hevs.silab.structuredsim.experimenthandling.ExperimentPlanGenerator;
 import ch.hevs.silab.structuredsim.experimenthandling.Parameter;
 import ch.hevs.silab.structuredsim.interfaces.AModifier;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Vector;
 
 public class ConcreteModifier extends AModifier {
 
+
+    private static final Logger logger = LogManager.getLogger(ConcreteModifier.class.getName());
 
     String keyToChange;
     char operator;
@@ -40,7 +45,7 @@ public class ConcreteModifier extends AModifier {
     public Environment applyModifier(Environment env) {
         Vector<Parameter> params = env.getSetOfParameters();
         for (Parameter p : params) {
-            System.out.println("param=" + p.getKey() + " keyToChange=" + keyToChange);
+            logger.debug("param=" + p.getKey() + " keyToChange=" + keyToChange);
             if (p.getKey().equals(keyToChange)) {
                 switch(operator) {
                     case '+':
