@@ -15,7 +15,6 @@ import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.Properties;
 
-import static junit.framework.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**

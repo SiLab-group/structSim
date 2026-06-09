@@ -1,12 +1,10 @@
 package hevs.ch.silab.hevs.ch.silab.unitTests.fileManagement;
 
-import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static junit.framework.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**

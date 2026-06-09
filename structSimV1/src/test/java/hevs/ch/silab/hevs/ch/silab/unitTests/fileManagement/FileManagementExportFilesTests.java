@@ -9,8 +9,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Vector;
 
-import static junit.framework.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * This class is used to test methods from FileManagement class

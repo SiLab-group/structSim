@@ -25,7 +25,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 
-import static junit.framework.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 /**
@@ -231,10 +231,10 @@ public class IntegrationTests {
         }
 
         // Assert
-        assertTrue("SummaryFile.txt should exist", summaryFile.exists());
-        assertEquals("Wrong number of simulations", expectedLines.length, lines.size());
+        assertTrue(summaryFile.exists(), "SummaryFile.txt should exist");
+        assertEquals(expectedLines.length, lines.size());
         for (int i = 0; i < expectedLines.length; i++) {
-            assertEquals("Incorrect content at line " + (i + 1), expectedLines[i], lines.get(i));
+            assertEquals(expectedLines[i], lines.get(i), "Incorrect content at line " + (i + 1));
         }
 
     }
@@ -391,7 +391,7 @@ public class IntegrationTests {
         File summaryFile = new File(pathOUT + "/SummaryFile.txt");
 
         // Assert
-        assertFalse("SummaryFile.txt should not exist", summaryFile.exists());
+        assertFalse(summaryFile.exists(), "SummaryFile.txt should not exist");
 
     }
 }
