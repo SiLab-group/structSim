@@ -86,7 +86,6 @@ public class ExperimentResultHandler implements Runnable {
 			 */
 		if(!resultsQueue.isEmpty()){
 			for (String str : resultsQueue) {
-				// System.out.println("result queue string : " + str);
 				logger.debug("Result queue string : " + str);
 				Vector<Measure> measures = glueCode.extractMeasures(str);
 				int positionOfLastSlash = str.lastIndexOf("/");

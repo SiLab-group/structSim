@@ -67,6 +67,7 @@ public class FileManagement {
 
 	// Variables
 	protected String filename;
+
 	protected Options options;
 	private String pathResult, pathSimulator;
 	private static final Logger logger = LogManager.getLogger(FileManagement.class.getName());
@@ -148,24 +149,6 @@ public class FileManagement {
 
 	}
 
-	/**
-	 * This method create a new empty file in a specific folder. If the folder
-	 * is not existing, the method create it.
-	 * 
-	 * @param folderPath
-	 *            : The path to the folder
-	 * @param filename
-	 *            : The name of the file to save.
-	 */
-	/*
-	 * public void createFile(String folderPath, String filename) { File file =
-	 * new File(folderPath + filename); file.getParentFile().mkdir(); try {
-	 * file.createNewFile(); } catch (IOException e) {
-	 * System.out.println("Sorry but this folder already exist!!!!");
-	 * e.printStackTrace(); } }
-	 * 
-	 */
-
 	/** Method to create an empty Folder
 	 * 
 	 * @param folderPath : Path
@@ -203,38 +186,6 @@ public class FileManagement {
 		return filePath;
 
 	}
-
-	/**
-	 * Method to save a summaryFile where all the result will be summarized.
-	 * 
-	 * @param resultQueue : the queue with results of simulations
-	 */
-	/*	public void saveSummaryFile(BlockingQueue<Environment> resultQueue) {
-
-		do {
-
-			try {
-				BufferedWriter bw = new BufferedWriter(new FileWriter(options.getFolderPathOUT() + "/SummaryFile.txt"));
-				bw.write("RunId \t ParameterChanged \t Value \t Probability \t Path");
-				bw.newLine();
-
-				for (Environment env : resultQueue) {
-					String line = env.toString();
-					bw.write(line);
-					bw.newLine();
-				}
-
-				bw.flush();
-				bw.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-				logger.error("Error to save the summary File");
-			}
-
-		} while (resultQueue.isEmpty());
-
-	}
-	 */
 
 	/**
 	 * Method to load data from a properties file and put in an Hashmap
@@ -387,20 +338,18 @@ public class FileManagement {
 			Properties properties = new Properties();
 			properties.putAll(dataToWrite);
 
-			// Write the results in the existing file, at the end of the file,
-			// don't deleted what is already in the file.
-			// Does create the file if it does not exist,
-			// but launch exception when the folder is missing
+			/* Write the results in the existing file, at the end of the file,
+			don't deleted what is already in the file.
+			Does create the file if it does not exist,
+			but launch exception when the folder is missing*/
 			FileOutputStream fops = new FileOutputStream(filePath, keepPreviousResults);
 			properties.store(fops, null);
 			fops.close();
 
 		} catch (IOException e) {
-			//System.out.println(e.toString());
 			logger.error(e.toString());
 		}
 	}
-
 
 	/**
 	 * Method to create a new folder for each simulation
@@ -471,7 +420,6 @@ public class FileManagement {
 
 	}
 
-
 	public String getFilename() {
 		return filename;
 	}
@@ -487,4 +435,5 @@ public class FileManagement {
 	public void setOptions(Options options) {
 		this.options=options;
 	}
+
 }

@@ -42,6 +42,7 @@ public class ExperimentSimulatorHandler implements Runnable {
 	protected BlockingQueue<Environment> environnmentQueue;
 	protected BlockingQueue<String> resultsQueue;
 	protected ASimulationSystemHandler glueCode;
+
 	protected Options options;
 	private FileManagement fm;
 	private static final Logger logger = LogManager.getLogger(ExperimentSimulatorHandler.class.getName());
@@ -64,7 +65,6 @@ public class ExperimentSimulatorHandler implements Runnable {
 		this.options = o;
 		this.glueCode = (ASimulationSystemHandler) glueCode;
 		this.resultsQueue = resultsQueue;
-		// resultsQueue = new PriorityBlockingQueue<String>();
 		this.fm = fm;
 		this.plan = plan;
 	}
@@ -84,19 +84,14 @@ public class ExperimentSimulatorHandler implements Runnable {
 			try {
 				logger.debug("Size of the Simulation Queue : " + environnmentQueue.size());
 				Environment env = environnmentQueue.take();
-				//glueCode.startSimulation(env);
+
 				glueCode.startSimulation(options.getPathParameters());
 				String resultPathForThisSimulation = env.pathSaveResult+"/results_sim"+ env.getId()+ ".txt";
 				logger.debug(resultPathForThisSimulation);
 				fm.copyFile(options.pathToSimulatorResultFile,resultPathForThisSimulation);
 				fm.copyFile(options.pathToSimulatorResultFile, options.pathSimulator + "/"+env.pathSaveResult.substring(env.pathSaveResult.lastIndexOf("/")+1, env.pathSaveResult.length())+"/results_sim"+ env.id +".txt");
 
-
-				//String pathResult = saveResult(env);
-				//env.setPathSaveResult(pathResult);
 				resultsQueue.add(resultPathForThisSimulation);
-
-
 
 				// to get out of the loop
 				if (plan.isFinish) {

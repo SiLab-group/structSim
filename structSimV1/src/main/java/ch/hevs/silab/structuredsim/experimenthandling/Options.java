@@ -176,5 +176,4 @@ public class Options {
 		this.pathToSimulatorResultFile = pathToSimulatorResultFile;
 	}
 
-
 }

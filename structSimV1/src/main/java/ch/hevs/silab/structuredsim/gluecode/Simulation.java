@@ -17,7 +17,6 @@ public class Simulation extends StartProgram {
                 .getClassLoader()
                 .getResourceAsStream("config.properties");
 
-
         List<AModifier> modifiers = new ArrayList<AModifier>();
 
         modifiers.add(new ConcreteModifier("val2", '+', 1.0, 0.5));

@@ -59,7 +59,6 @@ public class StartProgram {
 
 		// Create an instance of the "GlueCode"
 		ASimulationSystemHandler glueCodeClass = (ASimulationSystemHandler) glueCode;
-		// glueCodeClass.fileManagement = fm;
 
 		// Load the configuration properties file
 		Options o = fm.loadDataFromPropertiesFile(pathConfigFile);

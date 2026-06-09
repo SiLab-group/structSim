@@ -64,7 +64,6 @@ public class Environment implements Comparable<Environment> {
 	 */
 	public Environment(int id, Environment e){
 		this.id = id;
-		// this.setOfParameters = e.setOfParameters;
 
 		this.setOfParameters = new Vector<Parameter>();
 		for (Parameter p : e.setOfParameters) {

@@ -91,19 +91,11 @@ public abstract class AModifier {
 	public void setProbability(double probability) {
 		this.probability = probability;
 	}
-
-
-
 	public String getName() {
 		return name;
 	}
-
-
-
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-
 
 }

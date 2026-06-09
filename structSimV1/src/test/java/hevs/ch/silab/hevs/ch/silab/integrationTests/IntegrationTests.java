@@ -5,7 +5,6 @@ import ch.hevs.silab.structuredsim.gluecode.SimpleSimulationHandler;
 import ch.hevs.silab.structuredsim.gluecode.Simulation;
 import ch.hevs.silab.structuredsim.interfaces.AModifier;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -282,10 +281,6 @@ public class IntegrationTests {
         runAndAssertSummaryFile(String.valueOf(cuttOfPlanning), typeCuttOfPlanning, modifiers, exactExpectedLines);
     }
 
-
-
-
-
     /**
      * Same as previous test, but here we test the CRITERIA type.
      * @param scenarioNumber
@@ -328,7 +323,6 @@ public class IntegrationTests {
         runAndAssertSummaryFile(String.valueOf(cuttOfPlanning), typeCuttOfPlanning, modifiers, exactExpectedLines);
     }
 
-
     /**
      * This test tests the CRITERIA cuttOfType, with value 1.
      * With the current implementation of ExperimentPlanGenerator,
@@ -354,7 +348,6 @@ public class IntegrationTests {
         String[] exactExpectedLines = Arrays.copyOfRange(expectedLines, 0, expectedNumberOfLines);
         runAndAssertSummaryFile(String.valueOf(cuttOfPlanning), typeCuttOfPlanning, modifiers, exactExpectedLines);
     }
-
 
     /**
      * This test tests the case of a CRITERIA cutoff value of 0

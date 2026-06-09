@@ -33,7 +33,6 @@ public class FileManagementSimulationTests extends FileManagementTests {
     void saveSimultationResult_shouldSaveResultAndReturnPath_whenDirectoryExists() throws Exception {
 
         // Arrange
-
         Options options = new Options();
         options.setFolderPathOUT(tempDir.toString());
         fileManagement.setOptions(options);
@@ -107,7 +106,6 @@ public class FileManagementSimulationTests extends FileManagementTests {
     void createNewFolderSimulation_shouldCreateSimulationFolderAndWriteParametersFile() {
 
         // Arrange
-
         Options options = new Options();
         options.setFolderPathOUT(tempDir.resolve("results").toString());
         options.setPathSimulator(tempDir.resolve("simulator").toString());

@@ -110,7 +110,7 @@ public class ExperimentPlanGenerator implements Runnable {
 				currentEnv = modifier.applyModifier(currentEnv);
 
 				currentEnv.getTrace().add(modifier.getName() );
-				//for(String str : currentEn)
+
 				logger.debug("--------------------------------------------" +currentEnv.id + " " +  currentEnv.trace.toString());
 
 				currentEnv.setProbability(parentEnv.getProbability() * modifier.getProbability());

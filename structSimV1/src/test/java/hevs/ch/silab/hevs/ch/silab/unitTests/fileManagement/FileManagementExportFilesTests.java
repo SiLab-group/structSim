@@ -27,7 +27,6 @@ public class FileManagementExportFilesTests extends FileManagementTests {
     void createMeasuresFile_shouldCreateMeasuresFile(@TempDir Path tempDir) throws Exception {
 
         // Arrange
-
         Vector<Measure> measures = new Vector<>();
 
         Measure m1 = new Measure("throughput", "12");
@@ -58,7 +57,6 @@ public class FileManagementExportFilesTests extends FileManagementTests {
     void createModifierFile_shouldCreateSummaryFile(@TempDir Path tempDir) throws Exception {
 
         // Arrange
-
         String modifier = "SIMULATION_FINISHED";
 
         // Act
@@ -78,6 +76,5 @@ public class FileManagementExportFilesTests extends FileManagementTests {
         assertEquals(1, lines.size());
         assertEquals(modifier, lines.get(0));
     }
-
 
 }

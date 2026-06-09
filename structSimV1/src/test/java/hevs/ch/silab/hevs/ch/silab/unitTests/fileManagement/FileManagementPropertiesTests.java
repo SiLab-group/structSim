@@ -166,7 +166,6 @@ public class FileManagementPropertiesTests extends FileManagementTests {
     void writeDataInPropertiesFile_shouldOverwriteExistingFile() throws Exception {
 
         //Arrange
-
         Path file = tempDir.resolve("test.properties");
 
         LinkedHashMap<String, String> firstData = new LinkedHashMap<>();
@@ -241,7 +240,5 @@ public class FileManagementPropertiesTests extends FileManagementTests {
         // Assert
         assertFalse(Files.exists(file));
     }
-
-
 
 }
