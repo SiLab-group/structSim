@@ -21,16 +21,17 @@ package ch.hevs.silab.structuredsim.interfaces;
 
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Vector;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
 import ch.hevs.silab.structuredsim.experimenthandling.Environment;
 import ch.hevs.silab.structuredsim.experimenthandling.ExperimentPlanGenerator;
-import ch.hevs.silab.structuredsim.experimenthandling.ExperimentResultHandler;
 import ch.hevs.silab.structuredsim.experimenthandling.ExperimentSimulatorHandler;
 import ch.hevs.silab.structuredsim.experimenthandling.Options;
 import ch.hevs.silab.structuredsim.experimenthandling.Parameter;
+import ch.hevs.silab.structuredsim.gluecode.Simulation;
 import ch.hevs.silab.structuredsim.util.FileManagement;
 
 /**
@@ -52,13 +53,12 @@ public class StartProgram {
 	 * @param glueCode : glue code object
 	 * @throws IOException
 	 */
-	public static void startProgram(String pathConfigFile, Object glueCode) throws IOException {
+	public static void startProgram(InputStream pathConfigFile, Object glueCode) throws IOException {
 
 		FileManagement fm = new FileManagement();
 
 		// Create an instance of the "GlueCode"
 		ASimulationSystemHandler glueCodeClass = (ASimulationSystemHandler) glueCode;
-//		glueCodeClass.fileManagement = fm;
 
 		// Load the configuration properties file
 		Options o = fm.loadDataFromPropertiesFile(pathConfigFile);
@@ -67,8 +67,10 @@ public class StartProgram {
 		// Get the List of the Parameters
 		Vector<Parameter> listParam = null;
 
-		listParam = glueCodeClass.readParametersFile(o.getPathParameters());
-
+		InputStream isParams = Simulation.class
+				.getClassLoader()
+				.getResourceAsStream(o.getPathParameters());
+		listParam = glueCodeClass.readParametersFile(isParams);
 
 		// Select the Parameter to change
 		Environment baseEnv = new Environment(0, listParam, 1);
@@ -77,25 +79,28 @@ public class StartProgram {
 		BlockingQueue<String> resultQueue = new PriorityBlockingQueue<String>();
 
 		glueCodeClass.setOptions(o);
-		
-		ExperimentPlanGenerator planning = new ExperimentPlanGenerator(queue, baseEnv, o, glueCodeClass, fm);
-		Thread planningThread = new Thread(planning);
-		planningThread.setName("Planning Thread");
-		planningThread.start();
-		
-		ExperimentSimulatorHandler simulator = new ExperimentSimulatorHandler(queue, resultQueue, o, glueCodeClass, fm, planning);
-		Thread simultationThread = new Thread(simulator);
-		simultationThread.setName("Simulation Thread");
-		simultationThread.start();
-		
-		/***
-		 * This thread was moved in the run method of ExperimentSimulatorHandler.
-		 * Because all results need to be analyse and measures extracted only after simulations done.
-		 * ExperimentResultHandler result = new ExperimentResultHandler(resultQueue, glueCodeClass, fm, o);
-		 * Thread resultThread = new Thread(result);
-		 * resultThread.setName("Result Thread");
-		 * resultThread.start();
-		 */
+
+		// This if statement prevents generation of theoretically infinite tree
+		if(!o.getTypeOfCuttOfPlanning().equals("CRITERIA") || o.getStopCriteria()>0) {
+			ExperimentPlanGenerator planning = new ExperimentPlanGenerator(queue, baseEnv, o, glueCodeClass, fm);
+			Thread planningThread = new Thread(planning);
+			planningThread.setName("Planning Thread");
+			planningThread.start();
+
+			ExperimentSimulatorHandler simulator = new ExperimentSimulatorHandler(queue, resultQueue, o, glueCodeClass, fm, planning);
+			Thread simultationThread = new Thread(simulator);
+			simultationThread.setName("Simulation Thread");
+			simultationThread.start();
+
+			/***
+			 * This thread was moved in the run method of ExperimentSimulatorHandler.
+			 * Because all results need to be analyse and measures extracted only after simulations done.
+			 * ExperimentResultHandler result = new ExperimentResultHandler(resultQueue, glueCodeClass, fm, o);
+			 * Thread resultThread = new Thread(result);
+			 * resultThread.setName("Result Thread");
+			 * resultThread.start();
+			 */
+		}
 		
 	}
 }

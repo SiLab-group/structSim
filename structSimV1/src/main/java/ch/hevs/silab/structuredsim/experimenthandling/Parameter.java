@@ -36,7 +36,6 @@ public class Parameter {
 
 	/**
 	 * Constructor of the class Parameters
-	 * 
 	 * @param key : key of the parameter
 	 * @param value : value of the parameter
 	 */
@@ -44,7 +43,7 @@ public class Parameter {
 		this.key = key;
 		this.value = value;
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param p : parameters
@@ -53,8 +52,6 @@ public class Parameter {
 		this.key = p.key;
 		this.value = p.value;
 	}
-
-
 
 	@Override
 	public String toString() {
@@ -92,7 +89,5 @@ public class Parameter {
 	public void setValue(double value) {
 		this.value = value;
 	}
-
-
 
 }

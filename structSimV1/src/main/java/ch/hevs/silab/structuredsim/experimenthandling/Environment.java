@@ -49,7 +49,6 @@ public class Environment implements Comparable<Environment> {
 	 * 
 	 * @param id : ID
 	 * @param setOfParameters : List of Parameters of this Environment
-	 * @param idParamChanged : ID from the parameters changed in this environment
 	 * @param probability : Probability
 	 */
 	public Environment(int id, Vector<Parameter> setOfParameters, double probability) {
@@ -65,12 +64,25 @@ public class Environment implements Comparable<Environment> {
 	 */
 	public Environment(int id, Environment e){
 		this.id = id;
-		this.setOfParameters = e.setOfParameters;
+
+		this.setOfParameters = new Vector<Parameter>();
+		for (Parameter p : e.setOfParameters) {
+			this.setOfParameters.add(new Parameter(p)); // Constructor by copy
+		}
+
 		this.probability = e.probability;
 		this.trace = new ArrayList<String>();
 		for(String s :e.trace){
 			trace.add(s);
 		}
+	}
+
+	/**
+	 * Default constructor to facilitate the writing
+	 * of the units tests of the FileManagement class
+	 */
+	public Environment() {
+		this(1, new Vector<Parameter>(), 1);
 	}
 
 	/**
@@ -129,18 +141,13 @@ public class Environment implements Comparable<Environment> {
 		this.pathSaveResult = pathSaveResult;
 	}
 
-
-
-
 	public String toStringModifier() {
 		String result ="" ;
 		for(String s : trace){
 			result += "   " + s;
 		}
-
-		return "Simulation ID : " + id + "\t" + "Modifier implemented : "  + result ;
+		return "Simulation ID : " + id + "\t Probability : " + probability + "\t Modifier implemented : "  + result;
 	}
-	
 
 	public List<String> getTrace() {
 		return trace;
@@ -150,10 +157,16 @@ public class Environment implements Comparable<Environment> {
 		this.trace = trace;
 	}
 
+	/**
+	 Allow to order environments by ascending order of probability
+	 @return
+	 1 if first environment is more probable,
+	 -1 if first environment is less probable,
+	 0 if they have equal probability
+	 */
 	@Override
-	public int compareTo(Environment arg0) {
-		return (int)(this.probability - arg0.getProbability());
+	public int compareTo(Environment other) {
+		return Double.compare(this.probability, other.probability);
 	}
-
 
 }

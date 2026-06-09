@@ -20,7 +20,6 @@
 
 package ch.hevs.silab.structuredsim.experimenthandling;
 
-import java.time.temporal.IsoFields;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -28,11 +27,11 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import ch.hevs.silab.structuredsim.interfaces.ASimulationSystemHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ch.hevs.silab.structuredsim.interfaces.AModifier;
-import ch.hevs.silab.structuredsim.interfaces.ASimulationSystemHandler;
 import ch.hevs.silab.structuredsim.interfaces.IManageModifier;
 import ch.hevs.silab.structuredsim.util.FileManagement;
 
@@ -51,6 +50,7 @@ public class ExperimentPlanGenerator implements Runnable {
 	//Variable
 	protected Environment baseEnvironment;
 	protected BlockingQueue<Environment> planningQueue;
+
 	protected Options options;
 	protected ASimulationSystemHandler glueCode;
 	private long endTime =0  ;
@@ -93,32 +93,35 @@ public class ExperimentPlanGenerator implements Runnable {
 		int idCpt = baseEnv.getId();
 		int cpt = 0;
 
-
 		while(!toExplore.isEmpty()){
+
+			// This break statement stops the program at the right time.
+			if(options.getTypeOfCuttOfPlanning().equals("INT") && cpt >= options.getCuttOfPlanning()){
+				break;
+			}
 
 			parentEnv = toExplore.remove(0);
 
 			for (AModifier modifier : listModifiers) {
 				idCpt ++;
+
 				currentEnv = new Environment(idCpt, parentEnv);
+
 				currentEnv = modifier.applyModifier(currentEnv);
+
 				currentEnv.getTrace().add(modifier.getName() );
-				//for(String str : currentEn)
-				System.out.println("--------------------------------------------" +currentEnv.id + " " +  currentEnv.trace.toString());
+
+				logger.debug("--------------------------------------------" +currentEnv.id + " " +  currentEnv.trace.toString());
+
 				currentEnv.setProbability(parentEnv.getProbability() * modifier.getProbability());
 
 				if(options.getTypeOfCuttOfPlanning().equals("CRITERIA") && 
 						currentEnv.getProbability() > options.getStopCriteria()){
 					toExplore.add(currentEnv);
-
 				}
 
-				if(options.getTypeOfCuttOfPlanning().equals("INT")&&
-						cpt <= options.getCuttOfPlanning()){
+				if(options.getTypeOfCuttOfPlanning().equals("INT")) {
 					toExplore.add(currentEnv);
-				}
-				else{
-					break;
 				}
 
 				fm.createNewFolderSimulation(currentEnv, glueCode);
@@ -127,8 +130,12 @@ public class ExperimentPlanGenerator implements Runnable {
 
 			}
 			cpt ++;
-			System.out.println("CPT : " + cpt);
-			Collections.sort(toExplore);
+			logger.debug("CPT : " + cpt);
+
+			/* We sort the environments by reverse order,
+			to put the most probable one in first position */
+			toExplore.sort(Collections.reverseOrder());
+
 		}
 	}
 
@@ -160,11 +167,10 @@ public class ExperimentPlanGenerator implements Runnable {
 	@Override
 	public void run() {
 
-
-
 		//Generate the number of Environment that we want
 		long currentTime = System.currentTimeMillis();
 
+		logger.debug("option = " + options.getTypeOfCuttOfPlanning());
 
 		switch(options.getTypeOfCuttOfPlanning()){
 		case "INT" :

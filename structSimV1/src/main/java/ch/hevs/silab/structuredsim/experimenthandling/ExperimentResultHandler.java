@@ -23,16 +23,16 @@ package ch.hevs.silab.structuredsim.experimenthandling;
 import java.util.Vector;
 import java.util.concurrent.BlockingQueue;
 
+import ch.hevs.silab.structuredsim.interfaces.ASimulationSystemHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ch.hevs.silab.structuredsim.interfaces.ASimulationSystemHandler;
 import ch.hevs.silab.structuredsim.util.FileManagement;
 
 /**
  * Name : ExperimentResultHandler
  * <p>
- * Description : This thread is for displaying where the results are save
+ * Description : This thread is for displaying where the results are saved
  * <p>
  * Date : 25 july 2017
  * 
@@ -46,8 +46,8 @@ public class ExperimentResultHandler implements Runnable {
 	protected ASimulationSystemHandler glueCode;
 	private FileManagement fm;
 	private static final Logger logger = LogManager.getLogger(ExperimentResultHandler.class.getName());
-	protected Options options;
 
+	protected Options options;
 
 
 	/**
@@ -57,8 +57,6 @@ public class ExperimentResultHandler implements Runnable {
 	 *            : BlockingQueue to get the list fulfilled
 	 * @param glueCode
 	 *            : Class of the glueCode
-	 * @param options
-	 *            : options object
 	 */
 	public ExperimentResultHandler(BlockingQueue<String> resultsQueue, Object glueCode, FileManagement fm, Options o) {
 		this.resultsQueue = resultsQueue;
@@ -88,7 +86,6 @@ public class ExperimentResultHandler implements Runnable {
 			 */
 		if(!resultsQueue.isEmpty()){
 			for (String str : resultsQueue) {
-				// System.out.println("result queue string : " + str);
 				logger.debug("Result queue string : " + str);
 				Vector<Measure> measures = glueCode.extractMeasures(str);
 				int positionOfLastSlash = str.lastIndexOf("/");

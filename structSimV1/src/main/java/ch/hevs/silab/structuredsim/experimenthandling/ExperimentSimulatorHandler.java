@@ -20,12 +20,11 @@
 package ch.hevs.silab.structuredsim.experimenthandling;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.PriorityBlockingQueue;
 
+import ch.hevs.silab.structuredsim.interfaces.ASimulationSystemHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ch.hevs.silab.structuredsim.interfaces.ASimulationSystemHandler;
 import ch.hevs.silab.structuredsim.util.FileManagement;
 
 /**
@@ -43,6 +42,7 @@ public class ExperimentSimulatorHandler implements Runnable {
 	protected BlockingQueue<Environment> environnmentQueue;
 	protected BlockingQueue<String> resultsQueue;
 	protected ASimulationSystemHandler glueCode;
+
 	protected Options options;
 	private FileManagement fm;
 	private static final Logger logger = LogManager.getLogger(ExperimentSimulatorHandler.class.getName());
@@ -54,8 +54,6 @@ public class ExperimentSimulatorHandler implements Runnable {
 	 * 
 	 * @param environnementQueue
 	 *            : The BlockignQueue where the environment will be saved
-	 * @param simulationHandler
-	 *            : Thread of the simulation
 	 * @param o
 	 *            : options object
 	 * @param glueCode
@@ -67,15 +65,13 @@ public class ExperimentSimulatorHandler implements Runnable {
 		this.options = o;
 		this.glueCode = (ASimulationSystemHandler) glueCode;
 		this.resultsQueue = resultsQueue;
-		// resultsQueue = new PriorityBlockingQueue<String>();
 		this.fm = fm;
 		this.plan = plan;
 	}
 
 	/**
 	 * Method to save the result
-	 * @param e : Environment
-	 * @return path where the file will be save
+	 * @return path where the file will be saved
 	 */
 	@Override
 	public void run() {
@@ -86,21 +82,16 @@ public class ExperimentSimulatorHandler implements Runnable {
 
 		do {
 			try {
-				System.out.println("Size of the Simulation Queue : " + environnmentQueue.size());
+				logger.debug("Size of the Simulation Queue : " + environnmentQueue.size());
 				Environment env = environnmentQueue.take();
-				//glueCode.startSimulation(env);
+
 				glueCode.startSimulation(options.getPathParameters());
 				String resultPathForThisSimulation = env.pathSaveResult+"/results_sim"+ env.getId()+ ".txt";
-				System.out.println(resultPathForThisSimulation);
+				logger.debug(resultPathForThisSimulation);
 				fm.copyFile(options.pathToSimulatorResultFile,resultPathForThisSimulation);
 				fm.copyFile(options.pathToSimulatorResultFile, options.pathSimulator + "/"+env.pathSaveResult.substring(env.pathSaveResult.lastIndexOf("/")+1, env.pathSaveResult.length())+"/results_sim"+ env.id +".txt");
 
-
-				//String pathResult = saveResult(env);
-				//env.setPathSaveResult(pathResult);
 				resultsQueue.add(resultPathForThisSimulation);
-
-
 
 				// to get out of the loop
 				if (plan.isFinish) {

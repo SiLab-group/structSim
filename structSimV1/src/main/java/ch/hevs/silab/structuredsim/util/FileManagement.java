@@ -39,16 +39,14 @@ import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.Properties;
 import java.util.Vector;
-import java.util.concurrent.BlockingQueue;
 
+import ch.hevs.silab.structuredsim.interfaces.ASimulationSystemHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ch.hevs.silab.structuredsim.experimenthandling.Environment;
 import ch.hevs.silab.structuredsim.experimenthandling.Measure;
 import ch.hevs.silab.structuredsim.experimenthandling.Options;
-import ch.hevs.silab.structuredsim.experimenthandling.Parameter;
-import ch.hevs.silab.structuredsim.interfaces.ASimulationSystemHandler;
 
 /**
  * The goal of this class is to manage parameters and/or results files.
@@ -69,6 +67,7 @@ public class FileManagement {
 
 	// Variables
 	protected String filename;
+
 	protected Options options;
 	private String pathResult, pathSimulator;
 	private static final Logger logger = LogManager.getLogger(FileManagement.class.getName());
@@ -119,13 +118,13 @@ public class FileManagement {
 	 */
 	public void moveFile(String originFile, String destinationFile) {
 		Path originPath = Paths.get(originFile);
+		if (!Files.exists(originPath)) return;
 		Path destinationPath = Paths.get(destinationFile);
 
 		try {
 			Files.move(originPath, destinationPath, REPLACE_EXISTING);
 		} catch (IOException e) {
 			logger.error("Impossible to move this file");
-			//System.out.println("Impossible to move this file");
 			e.printStackTrace();
 		}
 	}
@@ -143,31 +142,12 @@ public class FileManagement {
 		File dest = new File(destination);
 
 		try {
-			Files.copy(fileToCopy.toPath(), dest.toPath());
+			Files.copy(fileToCopy.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		} catch (Exception e) {
 			logger.error("This file in this folder already exist");
-			//e.printStackTrace();
 		}
 
 	}
-
-	/**
-	 * This method create a new empty file in a specific folder. If the folder
-	 * is not existing, the method create it.
-	 * 
-	 * @param folderPath
-	 *            : The path to the folder
-	 * @param filename
-	 *            : The name of the file to save.
-	 */
-	/*
-	 * public void createFile(String folderPath, String filename) { File file =
-	 * new File(folderPath + filename); file.getParentFile().mkdir(); try {
-	 * file.createNewFile(); } catch (IOException e) {
-	 * System.out.println("Sorry but this folder already exist!!!!");
-	 * e.printStackTrace(); } }
-	 * 
-	 */
 
 	/** Method to create an empty Folder
 	 * 
@@ -208,38 +188,6 @@ public class FileManagement {
 	}
 
 	/**
-	 * Method to save a summaryFile where all the result will be summarized.
-	 * 
-	 * @param resultQueue : the queue with results of simulations
-	 */
-	/*	public void saveSummaryFile(BlockingQueue<Environment> resultQueue) {
-
-		do {
-
-			try {
-				BufferedWriter bw = new BufferedWriter(new FileWriter(options.getFolderPathOUT() + "/SummaryFile.txt"));
-				bw.write("RunId \t ParameterChanged \t Value \t Probability \t Path");
-				bw.newLine();
-
-				for (Environment env : resultQueue) {
-					String line = env.toString();
-					bw.write(line);
-					bw.newLine();
-				}
-
-				bw.flush();
-				bw.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-				logger.error("Error to save the summary File");
-			}
-
-		} while (resultQueue.isEmpty());
-
-	}
-	 */
-
-	/**
 	 * Method to load data from a properties file and put in an Hashmap
 	 * 
 	 * @param filePath
@@ -258,7 +206,8 @@ public class FileManagement {
 			e.printStackTrace();
 			logger.error("Error to load Data from Properties file");
 		}
-		String cuttOfValue = "";
+
+		String cuttOfValue = properties.getProperty("cuttOfPlanning", "");
 
 		for (String key : properties.stringPropertyNames()) {
 
@@ -312,6 +261,61 @@ public class FileManagement {
 	}
 
 	/**
+	 * Same method as the previous one,
+	 * but using an InputStream instead of a String
+	 * @param ips
+	 * @return Options
+	 */
+	public Options loadDataFromPropertiesFile(InputStream ips) {
+		Properties properties = new Properties();
+		try {
+			properties.load(ips);
+			ips.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			logger.error("Error to load Data from Properties file");
+		}
+
+		// 1. Read all simple values
+		options.setPathParameters(properties.getProperty("pathParameters"));
+		options.setFolderPathOUT(properties.getProperty("pathOUT"));
+		options.setPathSimulator(properties.getProperty("pathSimulator"));
+		options.setPathToSimulatorResultFile(properties.getProperty("pathToSimulatorResultFile"));
+
+		// 2. Treat independant values
+		String cuttOfValue = properties.getProperty("cuttOfPlanning", "");
+		String typeCuttOf = properties.getProperty("typeCuttOfPlanning", "");
+
+		options.setTypeOfCuttOfPlanning(typeCuttOf);
+
+		switch (typeCuttOf) {
+			case "INT":
+				options.setCuttOfPlanning(Integer.parseInt(cuttOfValue));
+				break;
+			case "DAY":
+				Calendar cal1 = Calendar.getInstance();
+				cal1.set(Calendar.DATE, Integer.parseInt(cuttOfValue));
+				options.setCuttOfPlanningH(cal1);
+				break;
+			case "HOURS":
+				Calendar cal2 = Calendar.getInstance();
+				cal2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(cuttOfValue));
+				options.setCuttOfPlanningH(cal2);
+				break;
+			case "MINUTES":
+				Calendar cal3 = Calendar.getInstance();
+				cal3.set(Calendar.MINUTE, Integer.parseInt(cuttOfValue));
+				options.setCuttOfPlanningH(cal3);
+				break;
+			case "CRITERIA":
+				options.setStopCriteria(Double.parseDouble(cuttOfValue));
+				break;
+		}
+
+		return options;
+	}
+
+	/**
 	 * Method to write something in a properties file parameters :
 	 * <ul>
 	 * <li>String resultToWrite : The string to write in the file</li>
@@ -334,18 +338,18 @@ public class FileManagement {
 			Properties properties = new Properties();
 			properties.putAll(dataToWrite);
 
-			// Write the results in the existing file, at the end of the file,
-			// don't deleted what is already in the file.
+			/* Write the results in the existing file, at the end of the file,
+			don't deleted what is already in the file.
+			Does create the file if it does not exist,
+			but launch exception when the folder is missing*/
 			FileOutputStream fops = new FileOutputStream(filePath, keepPreviousResults);
 			properties.store(fops, null);
 			fops.close();
 
 		} catch (IOException e) {
-			//System.out.println(e.toString());
 			logger.error(e.toString());
 		}
 	}
-
 
 	/**
 	 * Method to create a new folder for each simulation
@@ -416,6 +420,20 @@ public class FileManagement {
 
 	}
 
+	public String getFilename() {
+		return filename;
+	}
 
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	public Options getOptions() {
+		return options;
+	}
+
+	public void setOptions(Options options) {
+		this.options=options;
+	}
 
 }

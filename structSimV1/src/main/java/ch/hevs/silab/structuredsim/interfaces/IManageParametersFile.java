@@ -19,6 +19,7 @@
 * */
 package ch.hevs.silab.structuredsim.interfaces;
 
+import java.io.InputStream;
 import java.util.Vector;
 
 import ch.hevs.silab.structuredsim.experimenthandling.Parameter;
@@ -43,6 +44,15 @@ public interface IManageParametersFile {
 	 * @see Parameter
 	 */
 	public Vector<Parameter> readParametersFile(String parametersFilePath);
+
+
+
+	/**
+	 * Method to read parameters from an InputStream instead
+	 * @author Matthias Gaillard
+	 */
+	public Vector<Parameter> readParametersFile(InputStream inputStream);
+
 
 	/**
 	 * Method to write a new file of parameters that will be used by your

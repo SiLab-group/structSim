@@ -33,7 +33,7 @@ package ch.hevs.silab.structuredsim.experimenthandling;
 
 public class Measure {
 
-	// Variable
+	// Variables
 	protected String key;
 	protected String value;
 

@@ -45,6 +45,16 @@ public abstract class AModifier {
 		this.name  ="AModifier";
 	}
 
+	/**
+	 * This constructor is used in the integration tests
+	 * @param probability
+	 * @param name
+	 */
+	public AModifier(double probability, String name) {
+		this.probability=probability;
+		this.name=name;
+	}
+
 
 
 	/**
@@ -61,8 +71,7 @@ public abstract class AModifier {
 	 * use the method getParameterToModify to get the Parameter. <p><i>Example : Parameters newParam = getParameterToModify(env.getSetOfParameters(), options.getValueToChange);</i>
 	 * </li>
 	 * </ul>
-	 * @param env : Environment. An Environment is one state of the simulation at the instant T. 
-	 * @param o : options for the simulation
+	 * @param env : Environment. An Environment is one state of the simulation at the instant T.
 	 * @return : environment.
 	 */
 	public abstract Environment applyModifier(Environment env);
@@ -82,22 +91,11 @@ public abstract class AModifier {
 	public void setProbability(double probability) {
 		this.probability = probability;
 	}
-
-
-
 	public String getName() {
 		return name;
 	}
-
-
-
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
-
-
-
 
 }
