@@ -4,7 +4,7 @@ import ch.hevs.silab.structuredsim.gluecode.ConcreteModifier;
 import ch.hevs.silab.structuredsim.gluecode.SimpleSimulationHandler;
 import ch.hevs.silab.structuredsim.gluecode.Simulation;
 import ch.hevs.silab.structuredsim.interfaces.AModifier;
-import junit.framework.TestCase;
+
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,6 +26,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 
+import static junit.framework.Assert.*;
+
 
 /**
  * This class is used to test the overall behavior of the framework,
@@ -35,7 +37,7 @@ import java.io.FileWriter;
  * with pictures in this folder.
  * @author Matthias Gaillard
  */
-public class IntegrationTests extends TestCase {
+public class IntegrationTests {
     private String pathOUT = System.getProperty("java.io.tmpdir").replace("\\", "/") + "/structsim-results";
     private String pathSIM = System.getProperty("java.io.tmpdir").replace("\\", "/") + "/structsim-simulator";
 

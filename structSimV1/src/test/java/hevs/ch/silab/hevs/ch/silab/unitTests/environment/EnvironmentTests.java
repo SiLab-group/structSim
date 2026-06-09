@@ -2,17 +2,19 @@ package hevs.ch.silab.hevs.ch.silab.unitTests.environment;
 
 import ch.hevs.silab.structuredsim.experimenthandling.Environment;
 import ch.hevs.silab.structuredsim.experimenthandling.Parameter;
-import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Vector;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * This class is used to test methods from Environment class
  * @author Matthias Gaillard
  */
-public class EnvironmentTests extends TestCase {
+public class EnvironmentTests {
 
 
     /**

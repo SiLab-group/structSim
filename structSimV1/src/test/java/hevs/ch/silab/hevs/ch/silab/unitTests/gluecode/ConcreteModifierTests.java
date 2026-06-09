@@ -3,19 +3,20 @@ package hevs.ch.silab.hevs.ch.silab.unitTests.gluecode;
 import ch.hevs.silab.structuredsim.experimenthandling.Environment;
 import ch.hevs.silab.structuredsim.experimenthandling.Parameter;
 import ch.hevs.silab.structuredsim.gluecode.ConcreteModifier;
-import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Vector;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * This class is used to test methods from ConcreteModifier class
  * @see ConcreteModifier
  * @author Matthias Gaillard
  */
-public class ConcreteModifierTests extends TestCase {
+public class ConcreteModifierTests {
 
 
     private double delta = 1e-9;
