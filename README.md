@@ -106,7 +106,7 @@ Results are written to `pathOUT/SummaryFile.txt`.
 
 ---
 
-## Quick start — run the built-in example
+## Quick start - run the built-in example (Linux and Mac)
 
 The `examples/simple/` directory is a ready-to-run project matching the tutorial. It modifies `val2` with two modifiers (`+1` and `+10`) and runs 10 iterations.
 
