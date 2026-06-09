@@ -50,6 +50,7 @@ public class ExperimentPlanGenerator implements Runnable {
 	//Variable
 	protected Environment baseEnvironment;
 	protected BlockingQueue<Environment> planningQueue;
+
 	protected Options options;
 	protected ASimulationSystemHandler glueCode;
 	private long endTime =0  ;
@@ -92,14 +93,9 @@ public class ExperimentPlanGenerator implements Runnable {
 		int idCpt = baseEnv.getId();
 		int cpt = 0;
 
-
 		while(!toExplore.isEmpty()){
 
-			/*
-			This break statement is required in order to stop the program at the right time.
-			Without it, the program would keep exploring the current queue until it is empty,
-			which is not what we want I guess ??
-			 */
+			// This break statement stops the program at the right time.
 			if(options.getTypeOfCuttOfPlanning().equals("INT") && cpt >= options.getCuttOfPlanning()){
 				break;
 			}
@@ -122,35 +118,11 @@ public class ExperimentPlanGenerator implements Runnable {
 				if(options.getTypeOfCuttOfPlanning().equals("CRITERIA") && 
 						currentEnv.getProbability() > options.getStopCriteria()){
 					toExplore.add(currentEnv);
-
-
 				}
 
-				if(options.getTypeOfCuttOfPlanning().equals("INT")
-						//&&idCpt <= options.getCuttOfPlanning())
-						//cpt <= options.getCuttOfPlanning())
-						/*
-						I removed the second condition
-						because it makes wrong results
-						according to integration tests scenario 2
-						 */
-				)
-
-
-				{
+				if(options.getTypeOfCuttOfPlanning().equals("INT")) {
 					toExplore.add(currentEnv);
 				}
-
-
-				/*
-				Not sure why that else break statement was there...
-				It just prevented the files to be created
-				if the type of cut was not INT.
-				 */
-				/*
-				else{
-					break;
-				}*/
 
 				fm.createNewFolderSimulation(currentEnv, glueCode);
 				addEnvToQueue(currentEnv);
@@ -194,8 +166,6 @@ public class ExperimentPlanGenerator implements Runnable {
 
 	@Override
 	public void run() {
-
-
 
 		//Generate the number of Environment that we want
 		long currentTime = System.currentTimeMillis();

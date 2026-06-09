@@ -36,7 +36,6 @@ public class Parameter {
 
 	/**
 	 * Constructor of the class Parameters
-	 * 
 	 * @param key : key of the parameter
 	 * @param value : value of the parameter
 	 */

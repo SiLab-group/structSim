@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class FileManagementPropertiesTests extends FileManagementTests {
 
-    // GPT generated
+    // ChatGPT generated
     @Test
     void loadDataFromPropertiesFile_shouldLoadPropertiesFile() {
 
@@ -61,7 +61,7 @@ public class FileManagementPropertiesTests extends FileManagementTests {
 
 
 
-
+    //ChatGPT generated
     @Test
     void loadDataFromPropertiesFile_shouldLoadCriteriaPlanningType() {
 

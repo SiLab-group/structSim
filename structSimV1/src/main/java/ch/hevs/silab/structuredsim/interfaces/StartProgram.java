@@ -68,15 +68,6 @@ public class StartProgram {
 		// Get the List of the Parameters
 		Vector<Parameter> listParam = null;
 
-		//Previous version
-		// listParam = glueCodeClass.readParametersFile(o.getPathParameters());
-
-
-		/*
-		New version by Matthias Gaillard
-		Could not make it work with the previous version
-		using a simple path, so I used InputStream instead.
-		*/
 		InputStream isParams = Simulation.class
 				.getClassLoader()
 				.getResourceAsStream(o.getPathParameters());
@@ -90,7 +81,7 @@ public class StartProgram {
 
 		glueCodeClass.setOptions(o);
 
-		//Added this if statement to prevent generation of theoretically infinite tree
+		// This if statement prevents generation of theoretically infinite tree
 		if(!o.getTypeOfCuttOfPlanning().equals("CRITERIA") || o.getStopCriteria()>0) {
 			ExperimentPlanGenerator planning = new ExperimentPlanGenerator(queue, baseEnv, o, glueCodeClass, fm);
 			Thread planningThread = new Thread(planning);

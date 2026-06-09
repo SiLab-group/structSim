@@ -42,10 +42,6 @@ public class IntegrationTests {
     private String pathSIM = System.getProperty("java.io.tmpdir").replace("\\", "/") + "/structsim-simulator";
 
 
-
-
-
-
     /**
      * This method returns a list of predefined modifiers
      * depending on a scenario number.
@@ -81,7 +77,7 @@ public class IntegrationTests {
      * depending on the cuttOf value, this will be handled as well.
      *
      * @param scenario
-     * @return
+     * @return expected summaryFile
      */
     private String[] returnExpectedLinesFromScenario(int scenario) {
         switch (scenario) {
@@ -142,7 +138,7 @@ public class IntegrationTests {
     }
 
     /**
-     * Delete everything in pathOUT
+     * Deletes everything in pathOUT
      * Claude generated
      * @throws IOException
      */
@@ -248,9 +244,6 @@ public class IntegrationTests {
     /**
      * This test tests the generated summary file
      * with all scenarios and relevant INT cuttOfValues.
-     * Please don't change it,
-     * it took me a whole weekend to make it work.
-     *
      * @throws IOException
      */
     @ParameterizedTest

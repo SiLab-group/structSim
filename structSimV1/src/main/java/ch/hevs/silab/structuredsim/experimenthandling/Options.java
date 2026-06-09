@@ -170,7 +170,7 @@ public class Options {
 
 	/**
 	 * Setter for pathToSimulatorResultFolder
-	 * @param pathToSimulatorResultFolder
+	 * @param pathToSimulatorResultFile
 	 * */
 	public void setPathToSimulatorResultFile(String pathToSimulatorResultFile) {
 		this.pathToSimulatorResultFile = pathToSimulatorResultFile;

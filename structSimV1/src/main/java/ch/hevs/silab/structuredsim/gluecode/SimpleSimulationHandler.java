@@ -12,27 +12,13 @@ import java.util.Vector;
 
 public class SimpleSimulationHandler extends ASimulationSystemHandler {
 
-
-    private ConcreteModifier mc1 = new ConcreteModifier("val1", '*', 0.5, 0.5 );
-
-    private ConcreteModifier mc2 = new ConcreteModifier("val1", '*', 0.2, 0.2);
-
     private List<AModifier> modifiers = new ArrayList<AModifier>();
 
-
     public SimpleSimulationHandler() {
-
-
-
-
     }
 
     public SimpleSimulationHandler(List<AModifier> modifiers) {
-
-
         this.modifiers = modifiers;
-
-
     }
 
 
@@ -62,10 +48,7 @@ public class SimpleSimulationHandler extends ASimulationSystemHandler {
     }
 
     @Override
-    public List<AModifier> initiateModifierList() {
-        //listModifierClass.add(mc1);
-        //listModifierClass.add(mc2);
-
+    public List<AModifier> initiateModifierList() {;
         listModifierClass = modifiers;
         return listModifierClass;
     }
@@ -93,8 +76,6 @@ public class SimpleSimulationHandler extends ASimulationSystemHandler {
             e.printStackTrace();
         }
         return parametersList;
-
-
 
     }
 

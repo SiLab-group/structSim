@@ -66,14 +66,6 @@ public class Environment implements Comparable<Environment> {
 		this.id = id;
 		// this.setOfParameters = e.setOfParameters;
 
-		/* When creating a child from a parent environment,
-		the constructor was using a reference of the parent environment's parameters.
-		That means that when a modifier was applied to a child,
-		it was also implicitly applied to the parent.
-		This was inducing incorrect simulations when multiple modifiers were involved.
-		That's why I changed this constructor to take a copy of the parameters
-		instead of references
-		 */
 		this.setOfParameters = new Vector<Parameter>();
 		for (Parameter p : e.setOfParameters) {
 			this.setOfParameters.add(new Parameter(p)); // Constructor by copy
@@ -87,7 +79,7 @@ public class Environment implements Comparable<Environment> {
 	}
 
 	/**
-	 * Made this default constructor to facilitate the writing
+	 * Default constructor to facilitate the writing
 	 * of the units tests of the FileManagement class
 	 */
 	public Environment() {
@@ -150,9 +142,6 @@ public class Environment implements Comparable<Environment> {
 		this.pathSaveResult = pathSaveResult;
 	}
 
-
-
-
 	public String toStringModifier() {
 		String result ="" ;
 		for(String s : trace){
@@ -171,15 +160,13 @@ public class Environment implements Comparable<Environment> {
 
 	/**
 	 Allow to order environments by ascending order of probability
+	 @return
+	 1 if first environment is more probable,
+	 -1 if first environment is less probable,
+	 0 if they have equal probability
 	 */
 	@Override
 	public int compareTo(Environment other) {
-		/*
-		Changed the method because with the previous implementation,
-		it casted every value to 0 if they were between -1 and 1
-		(which would be the case for probabilities values)
-		With a Double.compare, it correcly returns the corresponding value : -1, 1 or 0.
-		 */
 		return Double.compare(this.probability, other.probability);
 	}
 

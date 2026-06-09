@@ -46,7 +46,7 @@ public abstract class AModifier {
 	}
 
 	/**
-	 * Add this constructor to make it easier to create modifiers
+	 * This constructor is used in the integration tests
 	 * @param probability
 	 * @param name
 	 */
@@ -104,9 +104,6 @@ public abstract class AModifier {
 		this.name = name;
 	}
 	
-	
-
-
 
 
 }
