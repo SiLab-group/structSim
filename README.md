@@ -120,3 +120,9 @@ The script will:
 2. Create `/tmp/structsim-results` and `/tmp/structsim-simulator`
 3. Run the simulation
 4. Print `SummaryFile.txt` when done
+
+
+## License
+
+This project is licensed under the Apache License, Version 2.0.
+See [LICENSE](LICENSE) for details.
