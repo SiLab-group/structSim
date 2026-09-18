@@ -92,6 +92,17 @@ public class StartProgram {
 			simultationThread.setName("Simulation Thread");
 			simultationThread.start();
 
+			// Wait for the whole pipeline to finish before returning, so that all
+			// output files (SummaryFile.txt, per-simulation results and measures)
+			// are on disk once startProgram() returns. Without this the caller can
+			// read the output while the worker threads are still writing it.
+			try {
+				planningThread.join();
+				simultationThread.join();
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+
 			/***
 			 * This thread was moved in the run method of ExperimentSimulatorHandler.
 			 * Because all results need to be analyse and measures extracted only after simulations done.
