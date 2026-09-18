@@ -21,6 +21,20 @@ https://www.hevs.ch/fr/mini-sites/projets-produits/si-lab/projets/structured-sim
 
 And in case, don't hesitate to contact us. 
 
+## Build and test
+
+The Maven project lives in `structSimV1/`. Run these from there:
+
+```bash
+cd structSimV1
+mvn compile   # compile the framework
+mvn test      # run the unit + integration tests (84 tests)
+mvn install   # build the jar and install it into your local Maven repository
+```
+
+> Requires a JDK **11–21** and Maven 3.6+. Newer JDKs (25 / 26) break the test
+> suite (Mockito can't instrument classes on them).
+
 ## Running the simulation (mock mode)
 
 The framework ships with a mock simulator (`SimpleSimulationHandler`) that lets you run without a real external simulator.
