@@ -92,10 +92,7 @@ public class StartProgram {
 			simultationThread.setName("Simulation Thread");
 			simultationThread.start();
 
-			// Wait for the whole pipeline to finish before returning, so that all
-			// output files (SummaryFile.txt, per-simulation results and measures)
-			// are on disk once startProgram() returns. Without this the caller can
-			// read the output while the worker threads are still writing it.
+			// Wait for both worker threads to finish.
 			try {
 				planningThread.join();
 				simultationThread.join();

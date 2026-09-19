@@ -12,7 +12,7 @@ echo "==> Creating output directories..."
 mkdir -p "$OUT_DIR/results" "$OUT_DIR/simulator"
 
 echo "==> Running the example simulation..."
-# Run from the repo root so the config's relative output/ paths resolve here.
+# Run from repo root so output/ resolves here.
 cd "$REPO_ROOT"
 mvn -q -f "$REPO_ROOT/examples/simple/pom.xml" compile exec:java
 

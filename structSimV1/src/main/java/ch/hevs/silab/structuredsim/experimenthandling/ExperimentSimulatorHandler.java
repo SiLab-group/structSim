@@ -84,9 +84,7 @@ public class ExperimentSimulatorHandler implements Runnable {
 		do {
 			try {
 				logger.debug("Size of the Simulation Queue : " + environnmentQueue.size());
-				// Poll with a timeout instead of blocking forever on take(), so the
-				// thread cannot hang once the planning thread has finished and the
-				// queue has been drained.
+				// Next environment, or null after 500 ms.
 				Environment env = environnmentQueue.poll(500, TimeUnit.MILLISECONDS);
 				if (env == null) {
 					if (plan.isFinish && environnmentQueue.isEmpty()) {
@@ -118,8 +116,7 @@ public class ExperimentSimulatorHandler implements Runnable {
 			}
 		} while (true);
 
-		// Extract and persist the measures, then wait for that work to finish so
-		// the results are on disk before this thread (and startProgram) returns.
+		// Run the result handler and wait for it to finish.
 		resultThread.start();
 		try {
 			resultThread.join();
