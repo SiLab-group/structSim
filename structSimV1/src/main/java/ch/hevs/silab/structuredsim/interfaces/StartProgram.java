@@ -92,6 +92,14 @@ public class StartProgram {
 			simultationThread.setName("Simulation Thread");
 			simultationThread.start();
 
+			// Wait for both worker threads to finish.
+			try {
+				planningThread.join();
+				simultationThread.join();
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+
 			/***
 			 * This thread was moved in the run method of ExperimentSimulatorHandler.
 			 * Because all results need to be analyse and measures extracted only after simulations done.
