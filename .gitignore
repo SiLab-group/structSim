@@ -1,4 +1,7 @@
 *.class
 ResultSim/
 all.log
-structSimV1/target/
+target/
+output/
+.idea/
+test-output.txt

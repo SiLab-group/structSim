@@ -20,6 +20,7 @@
 package ch.hevs.silab.structuredsim.experimenthandling;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 import ch.hevs.silab.structuredsim.interfaces.ASimulationSystemHandler;
 import org.apache.logging.log4j.LogManager;
@@ -83,7 +84,14 @@ public class ExperimentSimulatorHandler implements Runnable {
 		do {
 			try {
 				logger.debug("Size of the Simulation Queue : " + environnmentQueue.size());
-				Environment env = environnmentQueue.take();
+				// Next environment, or null after 500 ms.
+				Environment env = environnmentQueue.poll(500, TimeUnit.MILLISECONDS);
+				if (env == null) {
+					if (plan.isFinish && environnmentQueue.isEmpty()) {
+						break;
+					}
+					continue;
+				}
 
 				glueCode.startSimulation(options.getPathParameters());
 				String resultPathForThisSimulation = env.pathSaveResult+"/results_sim"+ env.getId()+ ".txt";
@@ -94,20 +102,27 @@ public class ExperimentSimulatorHandler implements Runnable {
 				resultsQueue.add(resultPathForThisSimulation);
 
 				// to get out of the loop
-				if (plan.isFinish) {
-					if (environnmentQueue.isEmpty()) {
-						logger.debug("It's empty ! and it's not the first time that we try to read the queue !");
-						break;
-					}
+				if (plan.isFinish && environnmentQueue.isEmpty()) {
+					logger.debug("It's empty ! and it's not the first time that we try to read the queue !");
+					break;
 				}
 
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+				break;
 			} catch (Exception e) {
 				e.printStackTrace();
 				logger.error("Error in the run of the Thread Simulator");
 			}
 		} while (true);
-		
+
+		// Run the result handler and wait for it to finish.
 		resultThread.start();
+		try {
+			resultThread.join();
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 
 	}
 
